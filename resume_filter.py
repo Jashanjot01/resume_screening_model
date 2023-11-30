@@ -12,6 +12,17 @@ def calculate_similarity(job_description, resume):
     similarity_matrix = cosine_similarity(count_matrix)
     return similarity_matrix[1][0].round(2) * 100
 
+@app.route('/')
+def welcome():
+    welcome_message = "Welcome to the Resume and Job Description Similarity Model!"
+    instructions = """
+    To use this model, send a POST request to /upload with two files:
+    1. 'job_description': A .docx file containing the job description.
+    2. 'resume': A .docx file containing the resume.
+    The model will return the similarity percentage between the job description and the resume.
+    """
+    return welcome_message + instructions
+
 @app.route('/upload', methods=['POST'])
 def upload_files():
     if 'job_description' not in request.files or 'resume' not in request.files:
